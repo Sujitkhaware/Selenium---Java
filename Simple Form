@@ -1,0 +1,48 @@
+package Assignment;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+public class Angular_Form {
+
+	public static void main(String[] args) {
+
+        WebDriver driver = new EdgeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://rahulshettyacademy.com/angularpractice");
+
+		driver.findElement(By.xpath("//div/label/following-sibling::input")).sendKeys("Sujit");
+		driver.findElement(By.xpath("//div/label[text()='Email']/following-sibling::input")).sendKeys("xyz@gmail.com");
+		driver.findElement(By.cssSelector("input[id*='Password1']")).sendKeys("xyz");
+		driver.findElement(By.cssSelector("input[id*='Check1']")).click();
+		
+		Assert.assertTrue(driver.findElement(By.cssSelector("input[id*='Check1']")).isSelected());
+		//Assert.assertFalse(driver.findElement(By.cssSelector("input[id*='Check1']")).isSelected());
+		
+		WebElement list = driver.findElement(By.id("exampleFormControlSelect1"));
+		
+		Select dropdown = new Select(list);
+		
+		dropdown.selectByIndex(1);
+		
+		driver.findElement(By.cssSelector("input[id*='Radio1']")).click();
+		
+		driver.findElement(By.cssSelector("input[name*='bday']")).sendKeys("08/11/1999");
+		
+		driver.findElement(By.className("btn-success")).click();
+		
+		String a = driver.findElement(By.className("alert-dismissible")).getText();
+		
+		System.out.println(a);
+		
+		
+		
+	}
+
+}
