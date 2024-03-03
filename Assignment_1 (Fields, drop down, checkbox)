@@ -1,0 +1,82 @@
+package Practice;
+
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Assignment_2 {
+
+	public static void main(String[] args) {
+
+		WebDriver driver = new EdgeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.get("https://rahulshettyacademy.com/loginpagePractise");
+
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+		String info = driver.findElement(By.xpath("//div[@class='form-group']/p[@class='text-center text-white']"))
+				.getText();
+
+		System.out.println(info);
+
+		String[] splittedString = info.split("is ");
+		System.out.println(splittedString[0]);
+		System.out.println(splittedString[1]);
+
+		String[] splittedString1 = splittedString[1].split("and ");
+
+		System.out.println(splittedString1[1]);
+		System.out.println(splittedString1[0]);
+
+		String info2 = splittedString1[0].trim();
+
+		driver.findElement(By.id("username")).sendKeys(info2);
+
+		driver.findElement(By.id("password")).sendKeys("learning");
+
+		WebElement dropdown = driver.findElement(By.xpath("//select[@data-style='btn-info']"));
+
+		Select list = new Select(dropdown);
+
+		list.selectByIndex(2);
+
+		driver.findElement(By.xpath("//input[@name='terms']")).click();
+
+		driver.findElement(By.id("signInBtn")).click();
+
+		WebDriverWait w = new WebDriverWait(driver, Duration.ofMillis(5));
+
+		String[] name = { "iphone X", "Samsung Note 8", "Nokia Edge", "Blackberry" };
+
+		List<WebElement> cartlist = driver.findElements(By.className("card-title"));
+
+		newmethod(driver, cartlist, name);
+
+		driver.findElement(By.xpath("//li[@class='nav-item active']/a[@class='nav-link btn btn-primary']")).click();
+
+	}
+
+	public static void newmethod(WebDriver driver, List<WebElement> cartlist, String[] name) {
+		for (int i = 0; i < cartlist.size(); i++) {
+			String a = cartlist.get(i).getText();
+			System.out.println(a);
+
+			List<String> b = Arrays.asList(name);
+
+			if (b.contains(a)) {
+				driver.findElements(By.xpath("//div[@class='card-footer']/button[@class='btn btn-info']")).get(i)
+						.click();
+			}
+		}
+	}
+}
