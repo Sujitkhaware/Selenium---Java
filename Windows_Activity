@@ -35,6 +35,12 @@ public class Windowsactivity {
 		//to navigate forward
 		driver.navigate().forward();
 
+		//Close the window --> Shall close only the window which is currently opened
+		driver.close();
+		
+		//Quit the window --> Shall close all the windows which are open in the browser
+		driver.quit();
+
 	}
 
 }
