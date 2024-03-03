@@ -1,0 +1,66 @@
+package Github;
+
+import java.time.Duration;
+import java.util.NoSuchElementException;
+import java.util.function.Function;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class Waits {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		WebDriver driver = new EdgeDriver();
+        //IMPLICIT WAIT
+        //Global Level wait it shall apply on each steps of the execution.
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		
+		//EXPLICIT WAIT
+		//In this we can target any specific element.
+		//For example if a perticular page is taking 15 seconds to load and othere pages are getting loaded in 5 seconds. 
+		//We can target the 15 seconds page element explicitely for which more time is taking place.
+		
+		WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(5)); //We can also apply this condition globally and put in the below specific conditon for where ever needed.
+		w.until(ExpectedConditions.visibilityOfElementLocated(By.className("promoInfo")));
+		
+		//FLUENT WAIT
+		//Fluent wait and webdriver wait is two different classes implementing one common wait interface
+		
+		//Duration for 30 seconds
+		//Polling wait means it shall iterate each 3 seconds.
+		//Also, we have ignored the NoSuchElementException.
+				Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(30))
+						.pollingEvery(Duration.ofSeconds(3)).ignoring(NoSuchElementException.class);
+				
+				//On what to wait
+				WebElement S = wait.until(new Function<WebDriver, WebElement>(){
+					
+					public WebElement apply(WebDriver driver) {
+						//Find condition
+						if(driver.findElement(By.cssSelector("[id='finish'] h4")).isDisplayed())
+						{
+						return driver.findElement(By.cssSelector("[id='finish'] h4"));
+						
+						}
+						else
+							//If not found than return null after 30 seconds.
+						{
+							return null;
+						}
+					}
+				});
+				
+				//Thread Sleep
+				Thread.sleep(3000);
+	
+	}
+
+}
