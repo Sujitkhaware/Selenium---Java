@@ -1,0 +1,40 @@
+package Github;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Windowsactivity {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		WebDriver driver = new EdgeDriver();
+		
+		//Run the browser in  maximize mode
+		driver.manage().window().maximize();
+		
+		Thread.sleep(2000);
+		
+		//Two ways to navigate on the url :-
+		//When we use the get method selenium will stop unit the page is fully loaded.
+		//100% loading for the page.
+		driver.get("https://rahulshettyacademy.com/AutomationPractice");
+		
+		Thread.sleep(2000);
+		
+		//When we use navigate method selenium will not wait once the page is loaded it shall be continue (like some basisc elements are loaded it shall continue)
+		//partial loading of the page
+		driver.navigate().to("https://Google.com");
+		
+		Thread.sleep(2000);
+		
+		//to navigate back
+		driver.navigate().back();
+		
+		Thread.sleep(2000);
+		
+		//to navigate forward
+		driver.navigate().forward();
+
+	}
+
+}
