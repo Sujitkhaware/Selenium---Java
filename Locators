@@ -1,0 +1,84 @@
+package Github;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Locators {
+
+	public static void main(String[] args) {
+	
+		WebDriver driver = new EdgeDriver();
+		
+		String user ="Sujit";
+		
+		driver.get("https://rahulshettyacademy.com/locatorspractice/");
+		
+		//ID locator
+		driver.findElement(By.id("inputUsername")).sendKeys(user);
+		
+		//ClassName locator
+		driver.findElement(By.className("signInBtn")).click();
+		
+		//Linked Text locator
+		String Text1 = driver.findElement(By.linkText("Forgot your password?")).getText();
+		
+		System.out.println(Text1);
+		
+		//Partial Link Text locator
+		String Text2 = driver.findElement(By.partialLinkText("Forgot your")).getText();
+		
+		System.out.println(Text2);
+		
+		//Name locator
+		driver.findElement(By.name("inputPassword")).sendKeys("RahulShettyAcademy");
+		
+		//Xpath locator
+		
+		driver.findElement(By.xpath("//Tagname[@attribute='Value']")).click();
+		driver.findElement(By.xpath("//Tagname[@Attribute='Value'][Index]")).click();
+		driver.findElement(By.xpath("//Tagname[text()='value of text']")).click();
+		
+		//Parent To child if single
+		driver.findElement(By.xpath("//ParentTagname/ChildTagname")).click();
+		
+		//Parent To child if multiple using index to differentiate
+		driver.findElement(By.xpath("//ParentTagname/ChildTagname[Index]")).click();
+		
+		driver.findElement(By.xpath("//ParentTagname[@attribute=’Value’] //ChildTagname[@attribute=’Value’]")).click();
+		
+		//Child to parent concept
+		driver.findElement(By.xpath("//ParentTagname/Childtagname/parent::parenttagname")).click();
+		
+		//Sibling to Sibling concept
+		driver.findElement(By.xpath("//ParentTagname/Childtagname/following-sibling::siblingtagname")).click();
+		
+		//Xpath Generic path
+		driver.findElement(By.xpath("//Tagname[contains(text(),'value')]")).click();
+		
+		//Absolute Xpath start from the top
+		driver.findElement(By.xpath("/Tagname//Childtagname")).click();
+		
+		//Generic Xpath start from inbetween
+		driver.findElement(By.xpath("//Tagname//Childtagname")).click();
+		
+		//To search xpath in the browser console use the below statement
+		//--> $x('//Tagname[@Attribute="Value"]')
+		
+		//CSS selector locator
+		
+		driver.findElement(By.cssSelector("tagname.classname")).click();
+		driver.findElement(By.cssSelector("tagname#id")).click();
+		driver.findElement(By.cssSelector("tagname#name")).click();
+		driver.findElement(By.cssSelector("Tagname[attribute='value']:nth-child(Index)")).click();
+		driver.findElement(By.cssSelector("Tagname[attribute*='value']")).click();
+		
+		//Css Parent to child
+		driver.findElement(By.cssSelector("ParentTagname ChildTagname")).click();
+		
+		//To search css in the browser console use the below statement
+		//--> $('input[placeholder="Name"]') 
+
+	}
+
+}
