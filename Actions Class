@@ -1,0 +1,54 @@
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.WebElement;
+
+public class action {
+
+	public static void main(String[] args) {
+		
+		WebDriver driver = new EdgeDriver();
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://www.amazon.com/");
+		
+		driver.findElement(By.linkText("Your Account")).click();
+		
+		//Key rule for Actions class we need to build and perform at the end of each action.
+		
+		// Action class with object called a
+		Actions a = new Actions(driver);
+		
+		//Define in variable so we have some readablity
+		WebElement move = driver.findElement(By.id("icp-nav-flyout"));
+		
+		//Mouse Hover.
+		//After specifying the element you need to build it
+		//Build means this below step is build but it shall not perform unit and unless the users tells to perform it.
+		
+		//a.moveToElement(move).build().perform();
+		
+		//RIGHT CLICK
+		a.moveToElement(move).contextClick().build().perform();
+		
+		//SEND TEXT IN CAPS and SMALL.
+		//We are actually concatanating all of our action
+		//that is we first move to the element then we press shift key and then we are sending the key as "Hello"
+		//Again we unpress the shift key and sending the key as "world"
+		a.moveToElement(driver.findElement(By.id("nav-search-bar-form"))).click().keyDown(Keys.SHIFT).sendKeys("Hello")
+		.keyUp(Keys.SHIFT).sendKeys("world").build().perform();
+
+		//SELECT THE TEXT
+		a.moveToElement(driver.findElement(By.id("nav-search-bar-form"))).click().keyDown(Keys.SHIFT).sendKeys("Hello")
+		.doubleClick().build().perform();
+
+	}
+
+}
