@@ -1,0 +1,52 @@
+import java.time.Duration;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class childWindow {
+
+	public static void main(String[] args) {
+
+		WebDriver driver = new EdgeDriver();
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://rahulshettyacademy.com/loginpagePractise/");
+		
+		driver.findElement(By.cssSelector("a.blinkingText")).click();
+		
+		//Switch from parent to child
+		//First get the window handel id
+		//Set<String> is the return type which we need to define
+		Set<String> window = driver.getWindowHandles(); //[Parentid, Childid]
+		
+		//We have iterated over the window and get the id
+		Iterator<String>it = window.iterator();
+		//Control shall be on the 0 th index
+		String parentId = it.next();
+		//Control shall be on the 1 st index
+		String childId = it.next();
+		
+		System.out.println(window);
+		
+		//Shall switch to child window
+		driver.switchTo().window(childId);
+		
+		//store the text in a variable
+		String uname = driver.findElement(By.linkText("mentor@rahulshettyacademy.com")).getText();
+		
+		System.out.println(uname);
+		
+		//Again switch to the main parent window
+		driver.switchTo().window(parentId);
+		
+		driver.findElement(By.id("username")).sendKeys(uname);
+
+	}
+
+}
