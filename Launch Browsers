@@ -1,0 +1,25 @@
+package Github;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class Launchbrowsers {
+
+	public static void main(String[] args) {
+
+		//Launch Chrome browser
+		System.setProperty("webdriver.chrome.driver", "Put in the path for the chrome driver - Chrome.exe file");
+		WebDriver driver = new ChromeDriver();
+		
+		//Launch Edge browser
+		System.setProperty("webdriver.Edge.driver", "Put in the path for the Edge driver - msedgedriver.exe file");
+		WebDriver driver1 = new EdgeDriver();
+		
+		//Launch Firefox browser
+		System.setProperty("webdriver.gecko.driver", "Put in the path for the gecko driver - geckodriver.exe");
+		WebDriver driver2 = new FirefoxDriver();
+	}
+
+}
