@@ -38,14 +38,15 @@ public class childWindow {
 		driver.switchTo().window(childId);
 		
 		//store the text in a variable
-		String uname = driver.findElement(By.linkText("mentor@rahulshettyacademy.com")).getText();
+		//String uname = driver.findElement(By.linkText("mentor@rahulshettyacademy.com")).getText();
+		//System.out.println(uname);
 		
-		System.out.println(uname);
+		String output = driver.findElement(By.cssSelector(".im-para.red")).getText().split("at")[1].trim().split(" ")[0];
 		
 		//Again switch to the main parent window
 		driver.switchTo().window(parentId);
 		
-		driver.findElement(By.id("username")).sendKeys(uname);
+		driver.findElement(By.id("username")).sendKeys(output);
 
 	}
 
