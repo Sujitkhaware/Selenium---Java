@@ -1,0 +1,48 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class frameTest {
+
+	public static void main(String[] args) {
+
+		WebDriver driver = new EdgeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://jqueryui.com/droppable/");
+		
+		//Know how many frames are available in the page - get the count
+		
+		System.out.println(driver.findElements(By.tagName("iframe")).size());
+		
+		//frames
+		//3 switch type id, index, WebElement
+		//frame(String Orld) --> pass the driver.findElement(By.locatorname(" "))
+		
+		driver.switchTo().frame(driver.findElement(By.cssSelector(".demo-frame")));
+		
+		//Get the text
+		System.out.println(driver.findElement(By.cssSelector("#draggable")).getText());
+		
+		//Drag and Drop with the help of Actions class
+		
+		Actions A = new Actions(driver);
+		
+		WebElement source = driver.findElement(By.cssSelector("#draggable"));
+		WebElement destination = driver.findElement(By.id("droppable"));
+		
+		
+		//1st defined which WebElement need to be dragged
+		//2nd where to drop the element
+		A.dragAndDrop(source, destination).build().perform();
+		
+		//Once the actions has been performed on the frame and you want to move out of the frame.
+		
+		driver.switchTo().defaultContent();
+
+	}
+
+}
