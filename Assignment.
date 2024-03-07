@@ -1,0 +1,70 @@
+import java.time.Duration;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class linkCount {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		WebDriver driver = new EdgeDriver();
+
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+		// Give the count of links on the page. Each link have the "a" tag
+		System.out.println(driver.findElements(By.tagName("a")).size());
+
+		// Give the count of the footer section link
+		// Limit webdriver scope first
+		// Create the driver sub set
+		WebElement footer = driver.findElement(By.id("gf-BIG"));
+
+		// Now we have limited the section and shall get size of link.
+		System.out.println(footer.findElements(By.tagName("a")).size());
+
+		// Give the count for the first coloumn only
+		WebElement section1 = footer.findElement(By.xpath("//table/tbody/tr/td[1]/ul"));
+
+		System.out.println(section1.findElements(By.tagName("a")).size());
+
+		// bottom link count
+		WebElement bottom = driver.findElement(By.cssSelector(".col-sm-8"));
+
+		System.out.println(bottom.findElements(By.tagName("a")).size());
+		
+		//click on each link and check wheather the page is getting opened or not
+
+		for(int i=1;i<section1.findElements(By.tagName("a")).size();i++)
+		{
+			//Key combination
+			String clickonlink = Keys.chord(Keys.CONTROL, Keys.ENTER);
+			
+			//when there are the keyboard methods shall have to pass it in sendKeys
+			section1.findElements(By.tagName("a")).get(i).sendKeys(clickonlink);
+			
+			Thread.sleep(5000L);
+		}//opens all the tabs 
+			
+			Set<String> getTitle = driver.getWindowHandles();
+
+			//It shall switch between the tabs
+			Iterator<String> IT = getTitle.iterator();
+			
+			//While loop continiously execute the loops until the condition comes to false.
+			//hasNext tells that is there any next window present or not
+			while(IT.hasNext())
+			{
+				//id.next print us the windows title
+				driver.switchTo().window(IT.next());
+				System.out.println(driver.getTitle());
+			}//gives you the title.
+		}
+
+	}
