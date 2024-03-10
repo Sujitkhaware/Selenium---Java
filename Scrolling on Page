@@ -1,0 +1,39 @@
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Scrolling {
+
+	public static void main(String[] args) throws InterruptedException {
+
+		WebDriver driver = new EdgeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+
+		// Schroll in selenium. Using JavascriptExecutor
+		// need to cast the driver with the JavascriptExecutor
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		
+		//The scroll script shall be stored in the below
+		//Open console in the browser -> enter this -> window.scrollBy(0,500) then hit enter it shall be executed -> these are the coordinator
+		//Trial and check.
+		js.executeScript("window.scrollBy(0,500)"); //it is windows scroll
+		
+		//So we can differentiate
+		Thread.sleep(3000);
+		
+		//Scroll inside the table
+		//Open console in the browser -> enter this -> document.querySelector('.tableFixHead').scroll(0,500) then hit enter it shall be executed
+		//Put in the element fro which you need to scroll
+		js.executeScript("document.querySelector('.tableFixHead').scroll(0,500)");
+		
+		//For horizantal scroll
+		//Open console in the browser -> enter this -> document.querySelector('.tableFixHead').scrollLeft=5000 then hit enter it shall be executed
+		//Open console in the browser -> enter this -> window.scrollLeft=5000 then hit enter it shall be executed -> these are the coordinator
+		
+	}
+
+}
