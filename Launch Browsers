@@ -5,21 +5,25 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class Launchbrowsers {
+public class Launchbrowser {
 
 	public static void main(String[] args) {
 
-		//Launch Chrome browser
-		System.setProperty("webdriver.chrome.driver", "Put in the path for the chrome driver - Chrome.exe file");
-		WebDriver driver = new ChromeDriver();
+		//Launch Chrome
+		//Define the Chrome driver with the .exe location for the chrome driver
+		System.setProperty("webdriver.chrome.driver", "F:\\Working Projects\\Selenium_Java\\App\\chromedriver.exe");
+		WebDriver chromeDriver = new ChromeDriver();
 		
-		//Launch Edge browser
-		System.setProperty("webdriver.Edge.driver", "Put in the path for the Edge driver - msedgedriver.exe file");
-		WebDriver driver1 = new EdgeDriver();
+		//Launch Edge
+		//Define the Edge driver with the .exe location for the Edge driver
+		System.setProperty("webdriver.edge.driver", "F:\\Working Projects\\Selenium_Java\\App\\msedgedriver.exe");
+		WebDriver edgeDriver = new EdgeDriver();
 		
-		//Launch Firefox browser
-		System.setProperty("webdriver.gecko.driver", "Put in the path for the gecko driver - geckodriver.exe");
-		WebDriver driver2 = new FirefoxDriver();
+		//Launch Firefox
+		//Define the Gecko driver with the .exe location for the Gecko driver
+		System.setProperty("webdriver.gecko.driver", "F:\\Working Projects\\Selenium_Java\\App\\geckodriver.exe");
+		WebDriver fireFoxDriver = new FirefoxDriver();
+
 	}
 
 }
