@@ -1,0 +1,47 @@
+package Assignment;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Assignmentwebelement {
+
+	public static void main(String[] args) {
+
+		WebDriver driver = new EdgeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+
+		List<WebElement> rows = driver.findElements(By.xpath("//table[@name='courses']/tbody/tr"));
+
+		System.out.println("total row no = " + rows.size());
+
+		List<WebElement> column = driver.findElements(By.xpath("//table[@name='courses']/tbody/tr/th"));
+
+		System.out.println("total column no = " + column.size());
+
+		String one = driver.findElement(By.xpath("//table[@name='courses']/tbody/tr[3]/td[1]")).getText();
+		String two = driver.findElement(By.xpath("//table[@name='courses']/tbody/tr[3]/td[2]")).getText();
+		String three = driver.findElement(By.xpath("//table[@name='courses']/tbody/tr[3]/td[3]")).getText();
+
+		System.out.println(one + " | " + two + " | " + three);
+
+		List<WebElement> values = driver.findElements(By.xpath("//table[@name='courses']/tbody/tr/td[3]"));
+
+		int sum = 0;
+
+		for (int i = 0; i < values.size(); i++) {
+			sum = sum + values.size();
+		}
+
+		System.out.println("total sum value is " + sum);
+
+		driver.close();
+	}
+
+}
