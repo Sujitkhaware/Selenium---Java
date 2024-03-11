@@ -1,5 +1,8 @@
 package Github;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
@@ -34,12 +37,26 @@ public class Windowsactivity {
 		
 		//to navigate forward
 		driver.navigate().forward();
-
+		
+		//Switch between browsers
+		Set<String> window = driver.getWindowHandles();
+		Iterator<String> It = window.iterator();
+		//1st parent
+		String parentid = It.next();
+		//2nd child
+		String childid = It.next();
+		
+		//Switch to alert
+		driver.switchTo().alert().accept(); //to accept
+		
+		driver.switchTo().alert().dismiss(); //to reject
+		
 		//Close the window --> Shall close only the window which is currently opened
 		driver.close();
 		
 		//Quit the window --> Shall close all the windows which are open in the browser
 		driver.quit();
+		
 	}
 
 }
