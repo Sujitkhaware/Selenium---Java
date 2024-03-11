@@ -17,7 +17,7 @@ public class Windowsactivity {
 		//Two ways to navigate on the url :-
 		//When we use the get method selenium will stop unit the page is fully loaded.
 		//100% loading for the page.
-		driver.get("https://rahulshettyacademy.com/AutomationPractice");
+		driver.get("https://Flipkart.com");
 		
 		Thread.sleep(2000);
 		
@@ -40,7 +40,6 @@ public class Windowsactivity {
 		
 		//Quit the window --> Shall close all the windows which are open in the browser
 		driver.quit();
-
 	}
 
 }
