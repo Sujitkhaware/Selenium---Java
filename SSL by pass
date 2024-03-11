@@ -1,0 +1,24 @@
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+
+public class Sslcertification {
+
+	public static void main(String[] args) {
+
+		// There is a chrome class which helps us is setting up the chrome beheviours
+		EdgeOptions co = new EdgeOptions();
+
+		// We are telling our chrome that when ever the site is not secured, pass it.
+		co.setAcceptInsecureCerts(true);
+
+		WebDriver driver = new EdgeDriver(co);
+
+		driver.manage().window().maximize();
+
+		driver.get("https://expired.badssl.com/");
+
+	}
+
+}
