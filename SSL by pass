@@ -1,19 +1,49 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
-public class Sslcertification {
+public class Browserbehaviour {
 
 	public static void main(String[] args) {
+		
+		//These below options that you can use to customize and configure a BrowserDriver (might be Chrome, firefox, Edge) session.
 
 		// There is a chrome class which helps us is setting up the chrome beheviours
-		EdgeOptions co = new EdgeOptions();
+		EdgeOptions options = new EdgeOptions();
 
 		// We are telling our chrome that when ever the site is not secured, pass it.
-		co.setAcceptInsecureCerts(true);
+		options.setAcceptInsecureCerts(true);
+		
+		//Add extensions to the browser
+		options.addEncodedExtensions("extension file path");
+		
+		//Pass Proxy
+		//A proxy or proxy server is a computer system that acts as an intermediary between a user's device and the internet
+		//So in java we cannot send the Proxy as it is. We have one proxy class for it.
+		Proxy proxy = new Proxy();
+		//which proxy to send.
+		proxy.setHttpProxy("Enter proxy string ex - ipaddress:44");
+		//Once proxy has been set send it in below statement.
+		options.setCapability("proxy", proxy);
+		
+		//Handle popup behevious. Ex. allow the location, allow the microphone, allow the cookies, etc.
+		//How to disable them.
+		options.setExperimentalOption("excludeSwitches", Arrays.asList("disable-popup-blocking"));
+		
+		//Set download directory path
+		//Hashmap is a class.
+		Map<String, Object> downloads = new HashMap<String, Object>();
+		//define the path
+		downloads.put("download.default_directory", "path for the directory to specify");
+		//pass it in the options
+		options.setExperimentalOption("download", downloads);
 
-		WebDriver driver = new EdgeDriver(co);
+		WebDriver driver = new EdgeDriver(options);
 
 		driver.manage().window().maximize();
 
