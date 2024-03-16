@@ -1,0 +1,107 @@
+package Assignment;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.Assert;
+
+public class Spicejet_ {
+
+	public static void wait(WebDriver driver) {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+	}
+
+	public static void loopsAddPassenger(WebDriver driver) {
+
+		WebElement click = driver
+				.findElement(By.cssSelector("div[class*='r-19h5ruw r-184en5c'] div[class*='r-ubezar']"));
+		click.click();
+
+		for (int i = 1; i < 2; i++) {
+			driver.findElement(By.cssSelector("div[data-testid*='Adult-testID-plus'] svg")).click();
+		}
+
+		for (int i = 0; i < 2; i++) {
+			driver.findElement(By.cssSelector("div[data-testid*='Children-testID-plus'] svg")).click();
+		}
+
+		click.click();
+	}
+
+	public static void main(String[] args) {
+
+		String fromDest = "Jamm";
+
+		String toDest = "Mum";
+
+		String fromMonth = "May";
+
+		String toMonth = "Jun";
+
+		String category = "Students";
+
+		int date = 13;
+
+		WebDriver driver = new EdgeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.get("https://www.spicejet.com/");
+
+		driver.findElement(By.xpath("//div[text()='round trip']")).click();
+
+		driver.findElement(By.xpath("//div[text()='round trip']")).isSelected();
+
+		Assert.assertTrue(true);
+
+		driver.findElement(By.cssSelector("input[class='css-1cwyjr8 r-homxoj r-ubezar r-10paoce r-13qz1uu']")).click();
+
+		driver.findElement(By.cssSelector("input[class='css-1cwyjr8 r-homxoj r-ubezar r-10paoce r-13qz1uu']"))
+				.sendKeys(fromDest);
+
+		wait(driver);
+
+		driver.findElement(By.xpath("//div[@data-testid='to-testID-destination']/div/div/input")).sendKeys(toDest);
+
+		wait(driver);
+
+		driver.findElement(By.cssSelector(
+				"div[class*='r-11xbo3g r-1v2oles r-1otgn73 r-16zfatd r-eafdt9 r-1i6wzkk r-lrvibr r-184en5c'] svg g"))
+				.click();
+
+		driver.findElement(By.cssSelector("div[data-testid*='" + fromMonth
+				+ "'] div[class='css-1dbjc4n r-6koalj r-18u37iz r-d0pm55'] div[data-testid*='" + date + "']")).click();
+
+		wait(driver);
+
+		driver.findElement(By.cssSelector("div[data-testid*='" + toMonth
+				+ "'] div[class='css-1dbjc4n r-6koalj r-18u37iz r-d0pm55'] div[data-testid*='" + date + "']")).click();
+
+		loopsAddPassenger(driver);
+
+		driver.findElement(By.xpath("//div[text()='" + category + "']")).click();
+
+		driver.findElement(By.xpath("//div[text()='" + category + "']")).isSelected();
+
+		Assert.assertTrue(true);
+
+		driver.findElement(By.cssSelector("div[data-testid='home-page-flight-cta']")).click();
+
+		wait(driver);
+
+		WebElement selectCheckBox = driver.findElement(By.cssSelector("div[class*='r-9qu9m4']"));
+
+		selectCheckBox.findElement(By.xpath("//div[@class='css-1dbjc4n r-1tf5bf9 r-1777fci r-1ww30s9']/div/div[1]"))
+				.click();
+
+		WebElement enableContinue = driver.findElement(By.cssSelector(
+				"div[class*='css-1dbjc4n r-1awozwy r-z2wwpe r-1loqt21 r-18u37iz r-1777fci r-d9fdf6 r-1w50u8q r-ah5dr5 r-1otgn73']"));
+
+		enableContinue.click();
+
+	}
+
+}
