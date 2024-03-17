@@ -1,0 +1,161 @@
+package javaStream;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.google.common.collect.Streams;
+
+public class Lists {
+	
+		//Once a stream is modified we cannot use the same again. Have to comment it out.
+		
+	    @Test
+		public void regular()
+		{
+		
+		ArrayList<String> name = new ArrayList<String>();
+		
+		name.add("Aditi");
+		name.add("Arun");
+		name.add("Arjun");
+		name.add("Rahul");
+		name.add("Sujit");
+		
+		int count = 0;
+		
+		//Get the count of the name which are starting from the alphabet "A" -- Regular expression.
+		for(int i=0;i<name.size();i++)
+		{
+			String actualName = name.get(i);
+			if(actualName.startsWith("A"))
+			{
+				count++;
+			}
+		}
+		//Out put.
+		System.out.println(count);
+		}
+		
+		public void Streamfilter() 
+		{
+			
+		//Get the count of the name which are starting from the alphabet "A" -- Using JAVA STREAM
+			ArrayList<String> name = new ArrayList<String>();
+			
+			name.add("Aditi");
+			name.add("Arun");
+			name.add("Arjun");
+			name.add("Rahul");
+			name.add("Sujit");
+			
+			//Assign the array list to stream first
+			//filter is a method shall filter the data based upon the condition.
+			//s is the parameter
+			// -> it is lambda expression.
+			//Left side we are declaring the parameter
+			//Right side we specify the action of that expression
+			//Perform the terminal operation on final stream
+			//datatype of count is Long here
+			long A = name.stream().filter(s->s.startsWith("S")).count();
+			
+			System.out.println(A);
+			
+			//Create the Stream list
+			//There is no life for intermidiate op if there is no terminal op.
+			//Terminal op will execute only if intermidiate op (filter) returns true
+			long b = Stream.of("Aditi","Arun","Arjun","Rahul","Sujit").filter(s->s.startsWith("A")).count();
+			
+			System.out.println(b);
+			
+			/*
+			long c  = Stream.of("Aditi","Arun","Arjun","Rahul","Sujit","Sam").filter(s ->
+			{
+				//Shall have the provision to have more no. of conditions.
+				s.startsWith("A");
+			}).count();
+			System.out.println(c);
+			*/
+			
+			//print all the names of array list.
+			//forEach get all the items in the new stream created by the filter
+			//This shall give you the words whoes lenght is greater than 4
+			name.stream().filter(s->s.length()>4).forEach(s->System.out.println(s));
+			
+			//How to limit the result
+			name.stream().filter(s->s.length()>4).limit(1).forEach(s->System.out.println(s));
+			
+	}
+
+		@Test
+		public void Streammap()
+		{
+			//Print the names of which have the last letter as 'n'.convert them into Uppercase
+			//There is method call Map which can manipulate your orignal stream to the value on how we want to maniplate
+			Stream.of("Aditi","Arun","Arjun","Rahul","Sujit").filter(s->s.endsWith("n")).map(s->s.toUpperCase()).forEach(s->System.out.println(s));
+			
+			//Print the names of which have the first letter as 'a' covert them into UpperCase and To be sorted
+			//Convert array to array list
+			//These are case sensitive
+			List<String> names = Arrays.asList("Aditi","Sam","Abhiminu","Sanvi","Arjun","Rahul","Sujit");
+			names.stream().filter(s->s.startsWith("A")).sorted().map(s->s.toUpperCase()).forEach(s->System.out.println(s));
+			
+			//Merge two array list
+			List<String> L1 = Arrays.asList("Aditi","Sam","Abhiminu","Sanvi","Arjun","Rahul","Sujit");
+			List<String> L2 = Arrays.asList("Karan","Ankur","Bhavesh","Kishore","Alex","Sunny","Akshay");
+			
+			Stream<String> concatList = Streams.concat(L1.stream(),L2.stream());
+			
+			//concatList.sorted().forEach(s->System.out.println(s));
+			
+			//How to get to know if a perticular word is present in List or not. If present it shall return 'true'
+			//anyMatch shall return true or false
+			//anyMatch is the argument which is used to filter inside the List.
+			//equalsIgnorCase shall check wheather the word is present in the list or not.
+			boolean flag = concatList.anyMatch(s->s.equalsIgnoreCase("Alex"));
+			System.out.println(flag);
+			Assert.assertTrue(flag);
+		}
+		@Test
+		public void Streamcollect()
+		{
+			//Using collect method we shall complie the list and manipulate it. Then convert back them to the list.
+			//Collect shall collect all the results returned from the perticular method which have been defined.
+			//Collectors.toList() shall convert it into the list.
+			List<String> collectList = Stream.of("Aditi","Sam","Abhiminu","Sanvi","Arjun","Rahul","Sujit").filter(s->s.startsWith("A")).
+						sorted().map(s->s.toUpperCase()).collect(Collectors.toList());
+			
+			//you can now play around with the collectList
+			System.out.println(collectList.get(0));
+		}
+		
+		public void Streampractice()
+		{
+			List<Integer> numbers = Arrays.asList(3,2,1,4,1,4,5,6,5,7,8,10,11,12,11);
+			//print unique number from the above array
+			//sort the array
+			//Get the result of the 3rd one also.
+			
+			//numbers.stream().distinct().sorted().forEach(s->System.out.println(s));
+			
+			List<Integer> collectList_ = numbers.stream().distinct().sorted().collect(Collectors.toList());
+			
+			System.out.println(collectList_.get(2));
+		}
+		
+		public static void main(String[] args)
+		{
+			Lists L = new Lists();
+			//L.regular();
+			//L.Streamfilter();
+			//L.Streammap();
+			//L.Streamcollect();
+			L.Streampractice();
+		}
+	}
+
