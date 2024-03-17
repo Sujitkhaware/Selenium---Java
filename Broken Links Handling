@@ -1,0 +1,91 @@
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
+public class Brokenlink {
+
+	public static void main(String[] args) throws MalformedURLException, IOException {
+
+		WebDriver driver = new EdgeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
+		
+		//Handel Broken link
+		//Page should basically through some error
+		//1 way - Go to 'developer tool' selectect 'network tab' -> select 'XHR' -> Click on the URL -> 200 is sucess it should be under 400
+		
+		//2 way - there are some Java methods will call URLs and get you the status code.
+		//Get all URLs tied up to the links using selenium.
+		//If status code is greater than 400 then the URL is not working
+		//Selenium + Java Methods
+		
+		//Get one URL first
+		//String url = driver.findElement(By.cssSelector("a[href*='soapui']")).getAttribute("href");
+		
+		//method comes from URL class
+		//'openconnection' is a method under the URL class whoes return type is 'HttpURLConnection'
+		//And we are casting it
+		
+		/*
+		HttpURLConnection Links = (HttpURLConnection)new URL(url).openConnection();
+		Links.setRequestMethod("HEAD"); //HEAD is a request method.
+		Links.connect(); //To connect the link.
+		int respCode = Links.getResponseCode(); //To get the response
+		
+		System.out.println(respCode);
+		*/
+		
+		//To get the code for all the link --> Hard Assertions. (It shall stop when the link is broken and not scan rest of the links)
+		
+		/*
+		List<WebElement> allLinks = driver.findElements(By.xpath("//li/a"));
+		for(WebElement link : allLinks)
+		{
+			String urls = link.getAttribute("href");
+			HttpURLConnection conn = (HttpURLConnection)new URL(urls).openConnection();
+			conn.setRequestMethod("HEAD"); //HEAD is a request method.
+			conn.connect(); //To connect the link.
+			int respCode1 = conn.getResponseCode(); //To get the response
+			System.out.println(respCode1);
+			if(respCode1 > 400)
+			{
+				System.out.println("Link with the Text " + link.getText() + " is broken with code" + respCode1);
+				//Assert.assertTrue(false);
+			}
+		}
+		*/
+		
+		//To get the code for all the links --> Soft Assertions
+       List<WebElement> allLinks = driver.findElements(By.xpath("//li/a"));
+       SoftAssert a = new SoftAssert();
+		
+		for(WebElement link : allLinks)
+		{
+			String urls = link.getAttribute("href");
+			HttpURLConnection conn = (HttpURLConnection)new URL(urls).openConnection();
+			conn.setRequestMethod("HEAD"); //HEAD is a request method.
+			conn.connect(); //To connect the link.
+			int respCode1 = conn.getResponseCode(); //To get the response
+			System.out.println(respCode1);
+			a.assertTrue(respCode1<400, "Link with the Text " + link.getText() + " is broken with code" + respCode1);
+		}
+		//if all the urls are proper it shall not broke
+		a.assertAll();
+	}
+}
