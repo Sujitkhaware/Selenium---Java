@@ -1,0 +1,78 @@
+package javaStream;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.testng.Assert;
+
+public class Webtable {
+
+	public static void main(String[] args) {
+		
+		WebDriver driver = new EdgeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.get("https://rahulshettyacademy.com/seleniumPractise/#/offers");
+		
+		//Practice WebTables
+		// 1 ST
+		//Click on coloumn
+		//capture all webElements into List
+		//capture text of all webelements into new list (original list)
+		//sort in the orignal list of step 3 -> sorted list
+		//compare original list and sorted list
+
+		driver.findElement(By.cssSelector("th[aria-label*='Veg/fruit']")).click();
+		
+		List<WebElement> listNames = driver.findElements(By.xpath("//td[1]"));
+		
+	    List<String> originalList = listNames.stream().map(s->s.getText()).collect(Collectors.toList());
+	    
+	    List<String> sortedList = originalList.stream().sorted().collect(Collectors.toList());
+	    
+	    Assert.assertTrue(originalList.equals(sortedList));
+	    
+	    // 2 ND
+	    //get price for each vegitables
+	    //Scan the name column with getText -> Potato -> Print the price of the rice
+	    
+	    //So basically all the WebElemets are in the stream
+	    //Now the stream shall iterate each and every element
+	    //Now we shall filter on the perticular word
+	    //Then it shall pass only the Potato in map and get the price of only that element
+	   List<String> price = listNames.stream().filter(s->s.getText().contains("Apple")).
+	    							map(s->getPriceVeggie(s)).collect(Collectors.toList());
+	   
+	   System.out.println(price);
+	   
+	   // 3 RD
+	   //Handel pagenation + Sorting.
+	   List<String> pagenation;
+	   do {
+		   //Each time we need new list
+		   List<WebElement> listNames_1 = driver.findElements(By.xpath("//td[1]"));
+		   
+		   pagenation = listNames.stream().filter(s->s.getText().contains("Rice")).
+				map(s->getPriceVeggie(s)).collect(Collectors.toList());
+	   
+	   if((pagenation.size()<1))
+	   {
+		   driver.findElement(By.cssSelector("a[aria-label='Next']")).click();
+	   }
+	   }
+	   //If the size of the pagenation changes to 1 it shall come out of the loop.
+	   while(pagenation.size()<1);
+	}
+	
+
+	private static String getPriceVeggie(WebElement s) {
+		String priceValue = s.findElement(By.xpath("following-sibling::td[1]")).getText();
+		return priceValue;
+	}
+
+}
