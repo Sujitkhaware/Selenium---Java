@@ -1,0 +1,48 @@
+
+import java.util.Iterator;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Invokewindow {
+
+	public static void main(String[] args) {
+
+		WebDriver driver = new EdgeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.get("https://rahulshettyacademy.com/angularpractice/");
+		
+		//newWindow is used to give the command to the browser that you have to open a new WINDOW or TAB
+		//selenium shall open a new WINDOW or TAB and ready to take up something new
+		//But is doesn't mean that the control went to that tab
+		driver.switchTo().newWindow(WindowType.TAB);
+		
+		//when we call this method getWindowHandles selenium shall check how many windows are opened.
+		Set<String> window = driver.getWindowHandles();
+		Iterator<String> it = window.iterator();
+		String parentWindow = it.next();
+		//Switch to the child window
+		String childWindow = it.next();
+		
+		driver.get("https://rahulshettyacademy.com");
+		
+		String inputText = driver.findElements(By.cssSelector("a[href*='https://courses.rahulshettyacademy.com/p']")).get(1).getText();
+		
+		//Again switch to the parent window
+		driver.switchTo().window(parentWindow);
+		
+		WebElement name = driver.findElement(By.xpath("//label[text()='Name']"));
+		
+		driver.findElement(By.cssSelector("[name='name']")).sendKeys(inputText);
+		
+		//finally quit to close all the windows
+		driver.quit();
+	}
+
+}
