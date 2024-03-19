@@ -1,0 +1,49 @@
+import static org.openqa.selenium.support.locators.RelativeLocator.*;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class Relativelocators {
+
+	public static void main(String[] args) {
+
+		// Below are the Relative Locators
+		// above(): Element located above with respect to the specified element
+		// Below(): Element located below with respect to the specified element
+		// toLeftOf(): Element located to the left of specified element
+		// toRightOf(): Element located to the right of specified element
+		
+		//You can find the relative locator webelement only with its "TagName"
+		
+		//Below is the syntax
+		// driver.findElement(with TagName("XX").above(WebElement))
+		
+		//Befor starting the relative locator we need to import the below static package as is shall not be auto suggested by selenium
+		// import static org.openqa.selenium.support.locators.RelativeLocator.*;
+		
+		WebDriver driver = new EdgeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.get("https://rahulshettyacademy.com/angularpractice/");
+		
+		//above
+		WebElement editBoxName = driver.findElement(By.cssSelector("[name='name']"));
+		System.out.println(driver.findElement(with(By.tagName("label")).above(editBoxName)).getText());
+		
+		//below
+		WebElement date = driver.findElement(By.cssSelector("label[for*='date']"));
+		driver.findElement(with(By.tagName("input")).below(date)).click();
+		
+		//left
+		WebElement description = driver.findElement(By.xpath("//label[text()='Check me out if you Love IceCreams!']"));
+		driver.findElement(with(By.tagName("input")).toLeftOf(description)).click();
+		
+		//right
+		WebElement text = driver.findElement(By.xpath("//label[text()='Student']"));
+		driver.findElement(with(By.tagName("label")).toRightOf(text)).click();
+	}
+
+}
