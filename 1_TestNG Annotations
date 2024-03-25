@@ -1,0 +1,75 @@
+-1st condition (Before Test)
+Delete all the data from the database before you automate the scripts.
+We have to put in the '@BeforeTest' in the perticular class so it shall be be executed first
+
+        @BeforeTest
+	public void testPreRequisit()
+	{
+		System.out.println("I will execute first");
+	}
+
+-2nd condition (After Test)
+How to execute the after test. it shall only execute at the end. 
+
+        @AfterTest
+	public void testAfter() {
+		System.out.println("I will execute after test");
+	}
+
+-3rd condition (Before Suite)
+Before suit means it shall be executed before all the test is been execute in the xml file
+Because suit is parent to the test folders
+Mainly we shall put in the enviorment details in the suit (We shall get multiple suite.)
+
+        @BeforeSuite
+	public void testBeforeSuit() {
+		System.out.println("I will execute before suite");
+	}
+
+-4th condition (After suite)
+Before suit means it shall be executed after all the test is been execute in the xml file
+Because suit is parent to the test folders
+Mainly we shall put in the enviorment details in the suit (We shall get multiple suite.)
+
+        @AfterSuite
+	public void testAfterSuit() {
+		System.out.println("I will execute before suite");
+	}
+
+-5th condition (Before Method)
+It is specific to the class file.
+Before executing each and every test that perticular before method shall be executed
+ex - If there are 4 test cases in a perticular class it shall be executed 4 times
+
+        @BeforeMethod
+	public void testBeforeCases() {
+		System.out.println("I will execute before each test case");
+	}
+
+-6th condition (After Method)
+It is specific to the class file
+Afterexecuting each and every test that perticular after method shall be executed
+ex - If there are 4 test cases in a perticular class it shall be executed 4 times
+
+        @AfterMethod
+	public void testAfterCases() {
+		System.out.println("I will execute after each test case");
+	}
+
+-7th condition (Before Class)
+It shall be executed before the test case executed for the perticular class
+The scope of this is limit to the perticular class
+
+        @BeforeClass
+	public void testBeforClass() {
+		System.out.println("I will execute before the class");
+	}
+
+-8th condition (After class)
+It shall be executed after the test case executed for the perticular class
+The scope of this is limit to the perticular class
+
+        @AfterClass
+	public void testAfterClass() {
+		System.out.println("I will execute before the class");
+	}
