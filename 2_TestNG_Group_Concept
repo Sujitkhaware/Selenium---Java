@@ -1,0 +1,30 @@
+- Groups concept
+Lets take an example if there are 100 testcases and client asked us to execute only a few test cases from each class let assume only 4 testcases from 4 different classes. (include)
+
+If you want to run all the smoke test cases exclude the group. How to do that (exclude)
+How to do that using group.
+
+
+- We have to provide them with a Tag which we have to run in groups (groups="Smoke") --tag
+
+        @Test(groups={"Smoke"})
+	public void mobilewebLogin() {
+		 //Selenium code
+		System.out.println("mobileWebLogin");
+	}
+
+- How to put in the same into the .xml file below the test -->
+Both you can do include and exclude
+--> <groups><run><include name="Smoke"></include></run></groups>
+--> <groups><run><exclude name="Smoke"></exclude></run></groups>
+
+<suite name="Loan Departement">
+  <test name="Smoke Testcases">
+	  <groups><run><include name="Smoke"></include></run></groups>
+    <classes>
+		<!-- These below are the class (package.class name)-->
+      <class name="basic.test2"/>
+      <class name="basic.test3"/>
+    </classes>
+  </test>
+</suite>
