@@ -1,0 +1,46 @@
+-> Helper Attributes :-
+* Dependisum in TestNG, with the key work called depends
+Dependency means if we required to we have to get the document from a site we need to first login then download the document.
+Means the download test case is depend upon the login test case.
+Means first the login test case shall be executed then the download test case
+
+--> (dependsOnMethods=("testDemo2"))
+
+        @Test(groups={"Smoke"})
+	public void testDemo2() {
+		System.out.println("Test2");
+	}
+	
+	@Test(dependsOnMethods=("testDemo2"))
+	public void testDemo3() {
+		System.out.println("Test2");
+	}
+
+- Similarly you can depends upon multiple methods also.
+
+(dependsOnMethods={"testDemo2","testDemo3"})
+
+* Enabled Helper attribute --> How to off the test cases
+- If we have to skip a perticular test
+For example if the singIn functionality is not working and you have to skip it.
+It shall skip the perticular testcase
+--> (enabled=false), (enabled=true) --> it will on again.
+
+	@Test(enabled=false)
+	public void testDemo4() {
+		System.out.println("Test2");
+	}
+
+	@Test(enabled=true)
+	public void testDemo5() {
+		System.out.println("Test5");
+	}
+
+* TimeOut Helper attribute --> For a perticular test
+- If one of your test cases is taking long time to execute you can timeout it
+- 100 means one second.
+
+        @Test(timeOut=4000)
+	public void testDemo6() {
+		System.out.println("Test6");
+	}
