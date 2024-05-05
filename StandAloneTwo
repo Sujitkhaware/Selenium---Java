@@ -1,0 +1,99 @@
+package Frameworks.Test;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import Frameworks.PageObject.LogOut_3_Login;
+import Frameworks.PageObject.MainAddToCart_7;
+import Frameworks.PageObject.MainLogin_4;
+import Frameworks.PageObject.OpenDesktopDetails_5;
+import Frameworks.PageObject.Payment_9;
+import Frameworks.PageObject.RegisterPage_1;
+import Frameworks.PageObject.checkOutPage_8;
+import Frameworks.PageObject.validateRegistrationProcess_2;
+
+public class StandAloneTwo {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		String FirstName = "Sujit";
+		String LastName = "K";
+		String Email = "KSujit@gmail.com";
+		String Company = "xyz";
+		String Pass = "pass@123";
+		String City = "Mumbai";
+		String Address = "CSMT";
+		String code = "45610";
+		String phone = "52606563260";
+
+		WebDriver driver = new EdgeDriver();
+
+		driver.manage().window().maximize();
+
+		// Global Level time out
+
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+		driver.get("https://demo.nopcommerce.com/login");
+		
+		Thread.sleep(2000);
+		
+		RegisterPage_1 page1 = new RegisterPage_1(driver);
+		
+		validateRegistrationProcess_2 validateRegistrationProcess_2 = page1.Register(FirstName, LastName, Email, Company, Pass);
+		
+		//Registerd sucessfully
+		
+		LogOut_3_Login LogOut_Login = validateRegistrationProcess_2.validateRegister();
+		
+		//logged in again we click on the logout button, and again click on login button
+		
+		MainLogin_4 mainLogin = LogOut_Login.logout_Login();
+		
+		//Go the main login page
+		
+		OpenDesktopDetails_5 openDesktop = mainLogin.loginProcess(Email, Pass);
+		
+		//Again logeed in and get on to the home page
+		//have reached to the desktop page to buy the items. then we shall add it to the cart.
+		
+		MainAddToCart_7 AddToCart = openDesktop.ClickOnMainCategory();
+		
+		//Now it shall go the product page to add the specification
+		
+		AddToCart.addToCart();
+		String MessageClose = AddToCart.getConformation();
+		checkOutPage_8 checkout = AddToCart.close();
+		
+		Assert.assertEquals(MessageClose, "The product has been added to your shopping cart");
+		
+		//Once added to the cart shall go to the main cart page from where we shall checkout.
+		
+		//it shall now reach to the main checkout page
+		
+		Payment_9 paymentPage = checkout.CheckOut();
+		
+		//Go to the main checkout details page
+		
+		//1st page, 2nd, 3rd, 4th, 5th, 6th page
+		
+		paymentPage.payment(City, Address, code, phone);
+		
+		String confirmmessage = paymentPage.OrderConfim();
+		
+		Assert.assertEquals(confirmmessage, "Your order has been successfully processed!");
+		
+		driver.close();
+		
+	}
+
+}
